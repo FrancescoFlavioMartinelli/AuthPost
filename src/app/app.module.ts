@@ -15,6 +15,7 @@ import { UsersPage } from './pages/users.page';
 import { UsersDetailsPage } from './pages/users-details.page';
 import { LoginPageComponent } from './auth/login-page.component';
 import { RegistrationPageComponent } from './auth/registration-page.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes:Route[] = [
   {
@@ -44,7 +45,7 @@ const routes:Route[] = [
   {
     path:"users",
     component:UsersPage,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
     children:[
       {
         path:":id",

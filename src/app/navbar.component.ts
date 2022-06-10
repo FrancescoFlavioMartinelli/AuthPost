@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthData, AuthService } from './auth/auth.service';
 import { User } from './models/user';
 
 @Component({
@@ -64,6 +64,9 @@ import { User } from './models/user';
               >
             </li>
           </ul>
+
+          <h6 *ngIf="user">Benvenut* {{user.name}}</h6>
+          <button *ngIf="user" (click)="logout()">Logout</button>
         </div>
       </div>
     </nav>
@@ -73,11 +76,17 @@ import { User } from './models/user';
 export class NavbarComponent implements OnInit {
   constructor(private authSrv: AuthService) {}
 
-  user!:User;
+  user!:AuthData | null;
 
   ngOnInit(): void {
     this.authSrv.authObs.subscribe((res)=>{
-      this.user = res.user
+      this.user = res
     })
+  }
+
+  logout() {
+    if(confirm("Confermare il logout?") === true){
+      this.authSrv.logout();
+    }
   }
 }
